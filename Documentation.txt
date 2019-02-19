@@ -1,0 +1,14 @@
+module Tags: django-taggit
+
+https://github.com/alex/django-taggit
+https://django-taggit.readthedocs.io/en/latest/
+
+
+
+module login social media: social-auth-app-django
+
+https://github.com/python-social-auth/social-app-django
+https://python-social-auth.readthedocs.io/en/latest/
+
+Audio Record make in VueJS
+https://github.com/grishkovelli/vue-audio-recorder

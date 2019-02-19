@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+Login
+{% endblock title %}
+{% block top %}{% endblock top %}
+{% block carousel %}{% endblock carousel %}
+{% block css %}
+	<link href="{% static "css/signin.css" %}" rel="stylesheet">
+{% endblock css %}
+{% block content %}
+<div class="text-center centerLogin">
+
+	<form class="form-signin" method="post">
+				{% csrf_token %}
+       <a href="{% url 'entradas:index' %}">
+				 	<img class="mb-4" src="{% static "img/de3.png" %}" alt="" width="72" height="72">
+			 </a>
+       <h1 class="h3 mb-3 font-weight-normal">Desahogate</h1>
+
+       <label for="inputUser" class="sr-only">Username</label>
+       <input type="text" name="username" id="inputUser" class="form-control" placeholder="Username" required autofocus>
+       <label for="inputPassword" class="sr-only">Password</label>
+       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+       <div class="checkbox mb-3">
+         <label>
+           <input type="checkbox" value="remember-me"> Remember me
+         </label>
+       </div>
+			 <a href="{% url 'accounts:password_reset' %}">Olvidé mi contraseña</a>
+
+			 <input type="hidden" name="next" value="{% url 'entradas:index' %}">
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button><br>
+			 <p>Aun no tienes tu Cuenta Registrate <a href="{% url 'accounts:registrar' %}">Aqui...</a></p>
+			 <a class="btn btn-primary" href="{% url "social:begin" "facebook" %}">Ingresa con Facebook</a><br>
+			 <a class="btn btn-danger" href="{% url "social:begin" "google-oauth2" %}">Ingresa con Google</a>
+       <p class="mt-5 mb-3 text-muted">&copy; {% now "Y" %}</p>
+     </form>
+
+</div>
+{% endblock content %}
+{% block footer %}{% endblock footer %}

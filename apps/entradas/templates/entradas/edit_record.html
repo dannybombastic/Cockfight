@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Web Desahogate Recording{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+  <h3>Editar</h3>
+  <form method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        Titulo: {{ form.title }}
+      </div>
+      <div>
+        Descripcion: {{ form.descripcion }}
+      </div>
+      <div>
+        Tags: {{ form.tags }}
+      </div>
+      <button class="btn btn-warning" type="submit">Enviar</button>
+      <a class="btn btn-warning" href={% url 'entradas:index' %}>Inicio</a>
+  </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+<!--- <ul class="navbar-nav alinearDerecha"> --->
+
+      {% if request.user.is_authenticated%}
+        <div class="row">
+          <h5 class="m-2 text-center text-white">Hola {{request.user.username|capfirst }}.</h5>
+          <a class="btn btn-warning mr-3 text-center text-white" href="{% url "accounts:profile" request.user.profi.id %}">Perfil</a>
+          <a class="btn btn-warning mr-3 text-center text-white" href="{% url "accounts:logout" %}">Salir</a>
+        </div>
+      {% else %}
+              <a class="btn btn-warning" href="{% url "accounts:login" %}">Login</a>
+      {% endif %}

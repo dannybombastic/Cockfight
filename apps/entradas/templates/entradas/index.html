@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Web Desahogate {% endblock %}
+
+{% block content %}
+  {% if record_users %}
+     <div class="container">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+          <h6 class="border-bottom border-gray pb-2 mb-0">Recientes:</h6>
+          {% for re in record_users %}
+            <div class="media text-muted pt-3">
+              {% if re.author.profi.imagen %}
+                <img src="{{ re.author.profi.imagen.url }}" alt="avatar" class="mr-2 rounded-circle" width="72" height="72">
+              {% else %}
+              <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="avatar" class="mr-2 rounded-circle">
+              {% endif %}
+
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <a href="{% url 'entradas:record_view' re.id re.slug %}"><strong class="d-block text-gray-dark">{{ re.title|capfirst }}</strong></a>
+                {{ re.descripcion }}
+              </p>
+                <a href="{% url 'entradas:record_view' re.id re.slug %}">Escuchar</a>
+            </div>
+          {% endfor %}
+          <small class="d-block text-right mt-3">
+            <a>{% include "paginator.html" with page=page_obj %}</a>
+          </small>
+        </div>
+      </div>
+  {% else %}
+      No Hay Contenido para esta Categoria.
+  {% endif %}
+{% endblock %}

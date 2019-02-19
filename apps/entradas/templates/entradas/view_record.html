@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Web Desahogate View Record{% endblock %}
+
+{% block content %}
+<div class="container mb-2">
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+    {% if object %}
+                    <h1>{{ object.title|capfirst }}</h1>
+
+                 {% if object.author != None %}
+                        <a href="{% url "accounts:profile" object.author.profi.id %}">
+                            {% if object.author.profi.imagen %}
+                              <img src="{{ object.author.profi.imagen.url }}" class="img-fluid rounded-circle" width="72" height="72">
+                            {% else %}
+                              <img src="{% static 'img/no-avatar.jpg' %}" class="img-fluid rounded-circle" width="72" height="72">
+                            {% endif %}
+                        </a>
+                     User: <a href="{% url "accounts:profile" object.author.profi.id %}">{{ object.author|capfirst }}</a>,
+                 {% else %}
+                     User: Anonymous.
+                 {% endif %}
+
+                  <p>    Fecha: {{ object.create|date:"Y-m-d H:i" }}, Visto: {{ object.views }} veces.</p>
+                  <div> Tags:
+                 {% for tag in object.tags.all %}
+                         <a href="{% url 'entradas:tags_list_view' tag.slug %}">{{ tag.name }}</a>
+                       {% empty %}
+                         <p>---</p>
+                 {% endfor %}
+                  </div>
+                 
+                 <div>
+                         <audio controls>
+                           <source src="{{ object.upload.url }}" type="audio/wav">
+                         </audio>
+                 </div>
+                 {% if object.descripcion %}
+                          {{ object.descripcion }}
+                 {% endif %}
+                     <h3>Comentarios:</h3>
+            
+                 {% for bb in object.get_comments.all %}
+                  <div>
+                          {{ bb.author }}, {{ bb.create|date:"Y-m-d H:i" }}
+                  </div>
+                  <div>
+                          {{ bb.comment|linebreaks }}
+                  </div>
+                 {% endfor %}
+
+                 <div>
+                 {% if request.user.is_authenticated %}
+                      <form method="post">
+                           <p><h5>Deja tu comentario</h5></p>
+                                 {% csrf_token %}
+                            <div>
+                                  {{ form.comment }}
+                            </div>
+                            <button class="btn btn-primary" type="submit">Enviar Comentario</button>
+                      </form>
+                 {% else %}
+                      <a href="{% url "accounts:registrar" %}">Registrate para comentar...</a>
+                     <br><br>
+                 {% endif%}
+                       <br>
+                 {% if request.user.is_staff %}
+                     <a class="btn btn-primary" href={% url 'entradas:record_edit_view' object.id object.slug %}>Editar</a>
+                 {% endif %}
+                     <a class="btn btn-primary" href={% url 'entradas:index' %}>Volver</a>
+                 </div>
+            
+                 {% else %}
+                   <h3> No existe la Entrada </h3>
+    {% endif %}
+  </div>
+ </div>
+</div>
+{% endblock %}
